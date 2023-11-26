@@ -62,12 +62,26 @@ func encryptHandle() {
 		panic("El archivo no existe.")
 	}
 
-	contraseña := obtenerContraseña()
+	password := getPassword()
 	fmt.Println("\nEncriptando...")
 	// LLAMO AL ARCHIVO filecrypt.go y al método encriptar
 
-	filecrypt.Encriptar(file, contraseña)
+	filecrypt.Encriptar(file, password)
 	fmt.Println("\nArchivo encriptado exitosamente")
+}
+
+func getPassword() []byte {
+
+	fmt.Println("Ingrese la contraseña: ")
+	password, _ := term.ReadPassword(0)
+	fmt.Println("\n Confirmar la contraseña: ")
+	password2, _ := term.ReadPassword(0)
+
+	if !validatePassword(password, password2) {
+		fmt.Print("\n Las contraseñas no coinciden, intente nuevamente. \n")
+		return getPassword()
+	}
+	return password
 }
 
 func decryptHandle() {
@@ -81,32 +95,16 @@ func decryptHandle() {
 	}
 
 	fmt.Println("Ingrese la contraseña para desencriptar el archivo.")
-	contraseña, _ := term.ReadPassword(0)
+	password, _ := term.ReadPassword(0)
 	fmt.Println("\nDesencriptando...")
 
-	filecrypt.Desencriptar(file, contraseña)
+	filecrypt.Desencriptar(file, password)
 	fmt.Println("\nArchivo desencriptado exitosamente")
 }
 
-func obtenerContraseña() []byte {
-	fmt.Println("Ingrese la contraseña")
-	contraseña, _ := term.ReadPassword(0)
-	fmt.Println("\n Confirmar la contraseña")
-	contraseña2, _ := term.ReadPassword(0)
-
-	if !validatePassword(contraseña, contraseña2) {
-		fmt.Println("\n Las contraseñas no coinciden, intente nuevamente")
-		return obtenerContraseña()
-	}
-	return contraseña
-}
-
 func validatePassword(password1 []byte, password2 []byte) bool {
-	if !bytes.Equal(password1, password2) {
-		return false
-	}
 
-	return true
+	return bytes.Equal(password1, password2)
 }
 
 func validarArchivo(file string) bool {
