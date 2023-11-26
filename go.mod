@@ -1,4 +1,4 @@
-module github.com/MaximilianoAlias/golang-proyecto02.git
+module github.com/MaximilianoAlias/golang-proyecto02
 
 go 1.21.4
 

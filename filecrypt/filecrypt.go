@@ -105,7 +105,7 @@ func Desencriptar(source string, password []byte) {
 	key := password
 
 	//CREAMOS UNA VARIABLE QUE ALMACENA EL CIFRADO Y LA LONGITUD SIN LOS ULTIMOS 12
-	salt := ciphertext[len(ciphertext)-12]
+	salt := ciphertext[len(ciphertext)-12:]
 
 	str := hex.EncodeToString(salt)
 
