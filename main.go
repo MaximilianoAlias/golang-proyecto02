@@ -63,6 +63,7 @@ func encryptHandle() {
 	}
 
 	password := getPassword()
+
 	fmt.Println("\nEncriptando...")
 	// LLAMO AL ARCHIVO filecrypt.go y al método encriptar
 
