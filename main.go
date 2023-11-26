@@ -24,10 +24,10 @@ func main() {
 		imprimirAyuda()
 
 	case "encriptar":
-		encriptarIdentificadora()
+		encryptHandle()
 
 	case "desencriptar":
-		desencriptarIdentificadora()
+		decryptHandle()
 
 	default:
 		fmt.Println("Inicia la funcion encriptar para encriptar y la funcion desencriptar para desencriptar un archivo")
@@ -45,13 +45,13 @@ func imprimirAyuda() {
 	fmt.Println("")
 	fmt.Println("Comandos:")
 	fmt.Println("")
-	fmt.Println("\t encriptar\tEncripta un archivo dado un contraseña")
+	fmt.Println("\t encriptar\tEncripta un archivo otorgando una contraseña")
 	fmt.Println("\t desencriptar\tIntenta descifrar un archivo usando una contraseña")
 	fmt.Println("\t ayuda\t\tMuestra texto de ayuda")
 	fmt.Println("")
 }
 
-func encriptarIdentificadora() {
+func encryptHandle() {
 	if len(os.Args) < 3 {
 		println("Se necesita la ruta del archivo, para más información ejecute . ayuda")
 		os.Exit(0)
@@ -70,7 +70,7 @@ func encriptarIdentificadora() {
 	fmt.Println("\nArchivo encriptado exitosamente")
 }
 
-func desencriptarIdentificadora() {
+func decryptHandle() {
 	if len(os.Args) < 3 {
 		println("Se necesita la ruta del archivo, para mas informacion ejecute . ayuda")
 		os.Exit(0)
@@ -94,19 +94,19 @@ func obtenerContraseña() []byte {
 	fmt.Println("\n Confirmar la contraseña")
 	contraseña2, _ := term.ReadPassword(0)
 
-	if !validarContraseña(contraseña, contraseña2) {
+	if !validatePassword(contraseña, contraseña2) {
 		fmt.Println("\n Las contraseñas no coinciden, intente nuevamente")
 		return obtenerContraseña()
 	}
 	return contraseña
 }
 
-func validarContraseña(password1 []byte, password2 []byte) bool {
+func validatePassword(password1 []byte, password2 []byte) bool {
 	if !bytes.Equal(password1, password2) {
 		return false
 	}
-	return true
 
+	return true
 }
 
 func validarArchivo(file string) bool {
