@@ -1,5 +1,21 @@
 package main
 
+/*
+para encriptar un archivo utilice desde la consola el siguiente comando:
+
+go run . encriptar "nombre del archivo a encriptar + el tipo de archivo":
+ejemplo:
+
+go run . encriptar foto1.png
+
+para desencriptar un archivo utilice desde la consola el siguiente comando:
+
+go run . encriptar "nombre del archivo a desencriptar + el tipo de archivo":
+ejemplo:
+
+go run . desencriptar foto1.png
+
+*/
 import (
 	"bytes"
 	"fmt"
@@ -7,10 +23,7 @@ import (
 
 	"github.com/MaximilianoAlias/golang-proyecto02/filecrypt"
 
-	//"golang.org/x/crypto/ssh/terminal"
 	"syscall"
-
-	//"golang.org/x/crypto/ssh/terminal"
 
 	"golang.org/x/term"
 )
@@ -75,23 +88,6 @@ func encryptHandle() {
 	filecrypt.Encriptar(file, password)
 	fmt.Print("\nArchivo encriptado exitosamente")
 }
-
-/*
-func getPassword() []byte {
-
-	fmt.Print("Ingrese la contraseña: ")
-	password, _ := terminal.ReadPassword(0)
-
-	fmt.Print("\n Confirmar la contraseña: ")
-	password2, _ := terminal.ReadPassword(0)
-
-	if !validatePassword(password, password2) {
-		fmt.Print("\n Las contraseñas no coinciden, intente nuevamente. \n")
-		return getPassword()
-	}
-	return password
-}
-*/
 
 func getPassword() []byte {
 	fmt.Print("Ingrese la contraseña: ")
