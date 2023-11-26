@@ -7,6 +7,11 @@ import (
 
 	"github.com/MaximilianoAlias/golang-proyecto02/filecrypt"
 
+	//"golang.org/x/crypto/ssh/terminal"
+	"syscall"
+
+	//"golang.org/x/crypto/ssh/terminal"
+
 	"golang.org/x/term"
 )
 
@@ -64,24 +69,48 @@ func encryptHandle() {
 
 	password := getPassword()
 
-	fmt.Println("\nEncriptando...")
+	fmt.Print("\nEncriptando...")
 	// LLAMO AL ARCHIVO filecrypt.go y al método encriptar
 
 	filecrypt.Encriptar(file, password)
-	fmt.Println("\nArchivo encriptado exitosamente")
+	fmt.Print("\nArchivo encriptado exitosamente")
 }
 
+/*
 func getPassword() []byte {
 
-	fmt.Println("Ingrese la contraseña: ")
-	password, _ := term.ReadPassword(0)
-	fmt.Println("\n Confirmar la contraseña: ")
-	password2, _ := term.ReadPassword(0)
+	fmt.Print("Ingrese la contraseña: ")
+	password, _ := terminal.ReadPassword(0)
+
+	fmt.Print("\n Confirmar la contraseña: ")
+	password2, _ := terminal.ReadPassword(0)
 
 	if !validatePassword(password, password2) {
 		fmt.Print("\n Las contraseñas no coinciden, intente nuevamente. \n")
 		return getPassword()
 	}
+	return password
+}
+*/
+
+func getPassword() []byte {
+	fmt.Print("Ingrese la contraseña: ")
+	password, err := term.ReadPassword(int(syscall.Stdin))
+	if err != nil {
+		panic(err.Error())
+	}
+
+	fmt.Print("\nConfirmar la contraseña: ")
+	password2, err := term.ReadPassword(int(syscall.Stdin))
+	if err != nil {
+		panic(err.Error())
+	}
+
+	if !validatePassword(password, password2) {
+		fmt.Print("\n Las contraseñas no coinciden, intente nuevamente. \n")
+		return getPassword()
+	}
+
 	return password
 }
 
@@ -96,7 +125,7 @@ func decryptHandle() {
 	}
 
 	fmt.Println("Ingrese la contraseña para desencriptar el archivo.")
-	password, _ := term.ReadPassword(0)
+	password, _ := term.ReadPassword(int(syscall.Stdin))
 	fmt.Println("\nDesencriptando...")
 
 	filecrypt.Desencriptar(file, password)
